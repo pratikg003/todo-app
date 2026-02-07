@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _addEntry() {
     final text = _controller.text.trim();
-    if(text.isEmpty) return;
+    if (text.isEmpty) return;
     context.read<TodoProvider>().addEntry(text);
     _controller.clear();
     FocusScope.of(context).unfocus();
@@ -24,23 +24,41 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final todos = context.watch<TodoProvider>().todoList;
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("Todo App"))),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Center(
+          child: Text(
+            "Todo App",
+            style: TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Divider(thickness: 0.5, color: Colors.blueGrey),
+              ),
+              SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
                   itemCount: todos.length,
                   itemBuilder: (context, index) {
                     final todo = todos[index];
-          
+
                     return Container(
                       margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.blueGrey[50]
+                        color: Colors.green[50],
                       ),
                       child: ListTile(
                         onTap: () {
@@ -64,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               BottomAppBar(
+                color: Colors.white,
                 child: Row(
                   children: [
                     Expanded(
@@ -71,16 +90,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         controller: _controller,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Colors.blueGrey[50],
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide.none
+                            borderSide: BorderSide.none,
                           ),
-                          hintText: "New Todo"
+                          hintText: "New Todo",
                         ),
                       ),
                     ),
-                    IconButton(onPressed: _addEntry, icon: Icon(Icons.add)),
+                    SizedBox(width: 10,),
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.green[100]
+                      ),
+                      child: IconButton(onPressed: _addEntry, icon: Icon(Icons.add))),
                   ],
                 ),
               ),
